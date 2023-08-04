@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_advanced_sort_string_tab.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asuc <asuc@student.42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 14:25:16 by asuc              #+#    #+#             */
-/*   Updated: 2023/08/03 20:21:45 by asuc             ###   ########.fr       */
+/*   Created: 2023/08/03 20:35:39 by asuc              #+#    #+#             */
+/*   Updated: 2023/08/03 22:46:37 by asuc             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+void	ft_swap(char **a, char **b)
+{
+	char	*temp;
 
-int	*ft_map(int *tab, int length, int (*f)(int))
+	temp = *b;
+	*b = *a;
+	*a = temp;
+}
+
+void	ft_advanced_sort_string_tab(char **tab, int (*cmp)(char *, char *))
 {
 	int	i;
-	int	*tab_ret;
+	int	j;
 
 	i = 0;
-	tab_ret = malloc(sizeof(int) * length);
-	if (tab_ret == NULL)
-		return (tab_ret);
-	while (i < length)
+	j = 0;
+	while (tab[i])
 	{
-		tab_ret[i] = f(tab[i]);
+		while (tab[j])
+		{
+			if (tab[j + 1] && cmp(tab[j], tab[j + 1]) > 0)
+				ft_swap(&tab[j], &tab[j + 1]);
+			j++;
+		}
 		i++;
 	}
-	return (tab_ret);
 }

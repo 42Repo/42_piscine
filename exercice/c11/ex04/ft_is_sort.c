@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_is_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asuc <asuc@student.42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 14:25:16 by asuc              #+#    #+#             */
-/*   Updated: 2023/08/03 20:21:45 by asuc             ###   ########.fr       */
+/*   Created: 2023/08/03 12:53:28 by asuc              #+#    #+#             */
+/*   Updated: 2023/08/03 22:31:24 by asuc             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-int	*ft_map(int *tab, int length, int (*f)(int))
+int	ft_is_sort(int *tab, int length, int (*f)(int, int))
 {
 	int	i;
-	int	*tab_ret;
+	int	decrois;
+	int	crois;
 
 	i = 0;
-	tab_ret = malloc(sizeof(int) * length);
-	if (tab_ret == NULL)
-		return (tab_ret);
-	while (i < length)
+	decrois = 0;
+	crois = 0;
+	if (length == 0)
+		return (1);
+	while (i < length - 1)
 	{
-		tab_ret[i] = f(tab[i]);
-		i++;
+		if (f(tab[i], tab[i + 1]) > 0)
+			decrois++;
+		else if (f(tab[i], tab[i + 1]) < 0)
+			crois++;
+		else
+		{
+			decrois++;
+			crois++;
+		}
 	}
-	return (tab_ret);
+	if (crois != length - 1 && decrois != length - 1)
+		return (-1);
+	return (0);
 }
